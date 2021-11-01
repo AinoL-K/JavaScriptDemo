@@ -27,10 +27,11 @@ list.addEventListener('click', function(ev) {
   }
 }, false);
 
+
 // Lisätään listaan uusi tehtävä painamalla lisää nappia
 function newElement() {
   var li = document.createElement("li");
-  var inputValue = document.getElementById("myInput").value;
+  var inputValue = document.getElementById("myInput1").value;
   var t = document.createTextNode(inputValue);
   li.appendChild(t);
   if (inputValue === '') {
@@ -38,7 +39,7 @@ function newElement() {
   } else {
     document.getElementById("myUL").appendChild(li);
   }
-  document.getElementById("myInput").value = "";
+  document.getElementById("myInput1").value = "";
 
   var span = document.createElement("SPAN");
   var txt = document.createTextNode("\u00D7");
@@ -54,30 +55,27 @@ function newElement() {
   }
 }
 
-
-document.getElementById("register-btn").addEventListener("click", tallenna);
+document.getElementById("addBtn").addEventListener("click", tallenna);
 document.getElementById("display-btn").addEventListener("click", hae);
 
-// Functions
+// Tiedon tallennus Local storageen
 
 function tallenna() {
-    console.log("Tallennetaan...")
-    var n = document.getElementById("name").value;
-    var e = document.getElementById("email").value;
-    daatta = { nimi: n, email: e };
-    var old = JSON.parse(localStorage.getItem('tiedot'))||[]; //haetaan ja parsitaan muuttujaan old olemassaolevan LocalStoragen sisältö
-    old.push(daatta);
-    localStorage.setItem('tiedot', JSON.stringify(old));
-    
+    console.log("Tallennettu.")
+    var n = document.getElementById("MyInput1").value;
+    data = { tehtävä: n};
+    var old = JSON.parse(localStorage.getItem('tiedot'))||[];
+    old.push(data);
+    localStorage.setItem('tiedot', JSON.stringify(old));    
 }
 
-function hae() {
-    console.log("Haetaan")
-    var list = "<table><tr><th>Nimi </th><th> Email</th></tr>\n";
+function näytä() {
+    console.log("Näytetään.")
+    var list = "<table><tr><th>Tehtävä </th></tr>\n";
     var parsed = JSON.parse(localStorage.getItem('tiedot'));
     for( i = 0; i <= parsed.length - 1; i++) {
-        console.log(i + ' = ' + parsed[i].nimi + " " + parsed[i].email);
-        list += "<tr><td><i>" + parsed[i].nimi + "</i></td>\n<td><i>" + parsed[i].email + "</i></td></tr>\n";
+        console.log(i + ' = ' + parsed[i].tehtävä);
+        list += "<tr><td><i>" + parsed[i].tehtävä + "</i></td>\n";
     }
     list += "</table>";
     document.querySelector(".display-area").innerHTML = list;
